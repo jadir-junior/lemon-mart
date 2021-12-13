@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AppComponent } from './app.component'
 import { By } from '@angular/platform-browser'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { Location } from '@angular/common'
+import { MaterialModule } from './material.module'
 import { RouterTestingModule } from '@angular/router/testing'
 import { createComponentMock } from 'angular-unit-test-helper'
 
@@ -14,6 +16,8 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        MaterialModule,
+        HttpClientTestingModule,
         RouterTestingModule,
         RouterTestingModule.withRoutes([
           { path: 'home', component: createComponentMock('HomeComponent') },

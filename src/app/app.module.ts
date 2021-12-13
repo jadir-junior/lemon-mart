@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { HomeComponent } from './home/home.component'
+import { HttpClientModule } from '@angular/common/http'
 import { InventoryModule } from './inventory/inventory.module'
 import { ManagerModule } from './manager/manager.module'
 import { MaterialModule } from './material.module'
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module'
     InventoryModule,
     PosModule,
     UserModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -7,6 +7,7 @@ const modules = [MatButtonModule, MatToolbarModule, MatIconModule]
 
 @NgModule({
   declarations: [],
-  imports: [...modules],
+  imports: modules,
+  exports: modules,
 })
 export class MaterialModule {}

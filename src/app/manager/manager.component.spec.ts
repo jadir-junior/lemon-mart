@@ -45,24 +45,32 @@ describe('ManagerComponent', () => {
   })
 
   it('should create with links managers dashboard/user management/receipt lookup', () => {
-    const buttonManagerDashboardEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorManagerDashboard: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[0].nativeElement
-    const buttonUserManagementEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorUserManagement: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[1].nativeElement
-    const buttonReceiptLookupEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorReceiptLookup: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[2].nativeElement
+    const buttonInventory: HTMLButtonElement = fixture.debugElement.query(
+      By.css('[aria-label="Inventory"]')
+    ).nativeElement
+    const buttonPOS: HTMLButtonElement = fixture.debugElement.query(
+      By.css('[aria-label="POS"]')
+    ).nativeElement
 
     expect(component).toBeTruthy()
-    expect(buttonManagerDashboardEl.textContent).toBe("Manager's Dashboard")
-    expect(buttonUserManagementEl.textContent).toBe('User Management')
-    expect(buttonReceiptLookupEl.textContent).toBe('Receipt Lookup')
+    expect(buttonInventory).toBeTruthy()
+    expect(buttonPOS).toBeTruthy()
+    expect(AnchorManagerDashboard.textContent).toBe("Manager's Dashboard")
+    expect(AnchorUserManagement.textContent).toBe('User Management')
+    expect(AnchorReceiptLookup.textContent).toBe('Receipt Lookup')
   })
 
   it('should render a link active on Managers Dashbaord when initial state', fakeAsync(() => {
-    const buttonManagerDashboardEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorManagementDashboard: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[0].nativeElement
 
@@ -70,26 +78,26 @@ describe('ManagerComponent', () => {
     tick()
 
     expect(location.path()).toBe('/manager/home')
-    expect(buttonManagerDashboardEl).toHaveClass('active-link')
+    expect(AnchorManagementDashboard).toHaveClass('active-link')
   }))
 
   it('should render a link active on click in anchor Receipt Lookup', fakeAsync(() => {
-    const buttonManagerDashboardEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorManagementDashboard: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[0].nativeElement
-    const buttonReceiptLookupEl: HTMLAnchorElement = fixture.debugElement.queryAll(
+    const AnchorReceiptLookup: HTMLAnchorElement = fixture.debugElement.queryAll(
       By.css('a')
     )[2].nativeElement
 
     router.navigate(['manager'])
     tick()
-    buttonReceiptLookupEl.click()
+    AnchorReceiptLookup.click()
     tick()
 
     fixture.whenStable().then(() => {
       expect(location.path()).toBe('/manager/receipts')
-      expect(buttonManagerDashboardEl).not.toHaveClass('active-link')
-      expect(buttonReceiptLookupEl).toHaveClass('active-link')
+      expect(AnchorManagementDashboard).not.toHaveClass('active-link')
+      expect(AnchorReceiptLookup).toHaveClass('active-link')
     })
   }))
 })

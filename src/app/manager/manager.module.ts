@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common'
+import { FlexLayoutModule } from '@angular/flex-layout'
 import { ManagerComponent } from './manager.component'
 import { ManagerHomeComponent } from './manager-home/manager-home.component'
 import { ManagerRoutingModule } from './manager-routing.module'
@@ -14,6 +15,6 @@ import { UserManagementComponent } from './user-management/user-management.compo
     UserManagementComponent,
     ReceiptLookupComponent,
   ],
-  imports: [CommonModule, ManagerRoutingModule, MaterialModule],
+  imports: [CommonModule, ManagerRoutingModule, MaterialModule, FlexLayoutModule],
 })
 export class ManagerModule {}

@@ -42,7 +42,7 @@ describe('AppComponent', () => {
   it('should render a toolbar with a button "LemonMart" and when clicked should redirect to "/home"', async () => {
     // Arrenge
     const titleAppEl: HTMLElement = fixture.debugElement.query(By.css('h1')).nativeElement
-    const titleLinkEl: HTMLLinkElement = fixture.debugElement.query(
+    const titleLinkEl: HTMLAnchorElement = fixture.debugElement.query(
       By.css('a')
     ).nativeElement
 
@@ -51,6 +51,7 @@ describe('AppComponent', () => {
 
     // Assert
     expect(titleAppEl.textContent).toBe('LemonMart')
+    expect(titleLinkEl.href).toContain('/home')
     await fixture.whenStable().then(() => {
       expect(location.path()).toBe('/home')
     })

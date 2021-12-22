@@ -35,7 +35,7 @@ jobs:
         run: |
           npm ci
 
-      - name: Checking Lint
+      - name: Checking Style
         run: npm run style
 
       - name: Checking Lint

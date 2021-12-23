@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router'
 import { Component, OnInit } from '@angular/core'
 import { EmailValidation, PasswordValidation } from '../common/validations'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { catchError, combineLatest, filter, tap } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'

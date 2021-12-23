@@ -1,8 +1,4 @@
-import { combineLatest, filter, tap } from 'rxjs'
-
-import { AuthService } from '../auth/auth.service'
 import { Component } from '@angular/core'
-import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',

@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router'
 import { Component, OnInit } from '@angular/core'
+import { EmailValidation, PasswordValidation } from '../common/validations'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { catchError, combineLatest, filter, tap } from 'rxjs'
 
@@ -46,11 +47,8 @@ export class LoginComponent implements OnInit {
 
   buildLoginForm() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [Validators.required, Validators.minLength(8), Validators.maxLength(50)],
-      ],
+      email: ['', EmailValidation],
+      password: ['', PasswordValidation],
     })
   }
 

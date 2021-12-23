@@ -5,7 +5,9 @@ import { AuthService } from './auth/auth.service'
 import { By } from '@angular/platform-browser'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { Location } from '@angular/common'
+import { MatSidenavContainer } from '@angular/material/sidenav'
 import { MaterialModule } from './material.module'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { createComponentMock } from 'angular-unit-test-helper'
 
@@ -20,12 +22,13 @@ describe('AppComponent', () => {
         MaterialModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        NoopAnimationsModule,
         RouterTestingModule.withRoutes([
           { path: 'home', component: createComponentMock('HomeComponent') },
         ]),
       ],
-      declarations: [AppComponent],
-      providers: [AuthService],
+      declarations: [AppComponent, createComponentMock('NavigationMenuComponent')],
+      providers: [AuthService, MatSidenavContainer],
     }).compileComponents()
 
     location = TestBed.inject(Location)

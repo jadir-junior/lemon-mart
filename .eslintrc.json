@@ -46,7 +46,7 @@
         "no-console": [
           "warn",
           {
-            "allow": ["error"]
+            "allow": ["error", "warn"]
           }
         ]
       }

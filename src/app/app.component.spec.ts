@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AppComponent } from './app.component'
+import { AuthService } from './auth/auth.service'
 import { By } from '@angular/platform-browser'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { Location } from '@angular/common'
@@ -24,6 +25,7 @@ describe('AppComponent', () => {
         ]),
       ],
       declarations: [AppComponent],
+      providers: [AuthService],
     }).compileComponents()
 
     location = TestBed.inject(Location)

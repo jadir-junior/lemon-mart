@@ -14,9 +14,16 @@ import { MaterialModule } from './material.module'
 import { NgModule } from '@angular/core'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { ReactiveFormsModule } from '@angular/forms'
+import { SimpleDialogComponent } from './common/simple-dialog.component'
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PageNotFoundComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+    LoginComponent,
+    SimpleDialogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,5 +42,6 @@ import { ReactiveFormsModule } from '@angular/forms'
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [SimpleDialogComponent],
 })
 export class AppModule {}

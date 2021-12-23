@@ -31,5 +31,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Gererate the `home` component with inline template and styles
 
 ```
-npx ng g c home -m app --inline-tamplate --inline-style
+npx ng g c home -m app --inline-template --inline-style
 ```

@@ -6,6 +6,7 @@ import { catchError, combineLatest, filter, tap } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
 import { SubSink } from 'subsink'
+import { UiService } from '../common/ui.service'
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private uiService: UiService
   ) {
     this.subs.sink = this.route.paramMap.subscribe(
       (params) => (this.redirectUrl = params.get('redirectUrl') ?? '')
@@ -63,7 +65,9 @@ export class LoginComponent implements OnInit {
     ])
       .pipe(
         filter(([authStatus, user]) => authStatus.isAuthenticated && user?._id !== ''),
-        tap(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        tap(([authStatus, user]) => {
+          this.uiService.showToast(`Welcome ${user.fullName}! Role: ${user.role}`)
           this.router.navigate([this.redirectUrl || '/manager'])
         })
       )

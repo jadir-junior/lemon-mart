@@ -44,14 +44,11 @@ export class InMemoryAuthService extends AuthService {
     )
   }
 
-  protected authProvider(
-    email: string,
-    password: string
-  ): Observable<IServerAuthResponse> {
+  protected authProvider(email: string): Observable<IServerAuthResponse> {
     email = email.toLowerCase()
 
     if (!email.endsWith('@test.com')) {
-      return throwError('Failed to login! Email needs to end with @test.com')
+      return throwError(() => 'Failed to login! Email needs to end with @test.com')
     }
 
     const authStatus = {

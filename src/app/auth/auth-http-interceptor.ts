@@ -14,6 +14,7 @@ import { Router } from '@angular/router'
 export class AuthHttpInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const jwt = this.authService.getToken()
     const authRequest = req.clone({
@@ -23,7 +24,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     })
 
     return next.handle(authRequest).pipe(
-      catchError((err, caught) => {
+      catchError((err) => {
         if (err.status === 401) {
           this.router.navigate(['/login'], {
             queryParams: {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
 import { combineLatest, filter, tap } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
+import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 
 @Component({
@@ -31,7 +31,7 @@ export class HomeComponent {
     combineLatest([this.authService.authStatus$, this.authService.currentUser$])
       .pipe(
         filter(([authStatus, user]) => authStatus.isAuthenticated && user?._id !== ''),
-        tap(([authStatus, user]) => {
+        tap(() => {
           this.router.navigate(['/manager'])
         })
       )

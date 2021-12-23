@@ -10,12 +10,13 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { HomeComponent } from './home/home.component'
 import { InMemoryAuthService } from './auth/auth.inmemory.service'
 import { LoginComponent } from './login/login.component'
+import { MatSidenavContainer } from '@angular/material/sidenav'
 import { MaterialModule } from './material.module'
+import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { NgModule } from '@angular/core'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { ReactiveFormsModule } from '@angular/forms'
-import { SimpleDialogComponent } from './common/simple-dialog.component';
-import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
+import { SimpleDialogComponent } from './common/simple-dialog.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
       useClass: AuthHttpInterceptor,
       multi: true,
     },
+    MatSidenavContainer,
   ],
   bootstrap: [AppComponent],
   entryComponents: [SimpleDialogComponent],

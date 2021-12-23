@@ -67,10 +67,10 @@ import { SubSink } from 'subsink'
         >
           <app-navigation-menu></app-navigation-menu>
         </mat-sidenav>
+        <mat-sidenav-content>
+          <router-outlet></router-outlet>
+        </mat-sidenav-content>
       </mat-sidenav-container>
-      <mat-sidenav-content>
-        <router-outlet></router-outlet>
-      </mat-sidenav-content>
     </div>
   `,
   styles: [
@@ -110,7 +110,7 @@ import { SubSink } from 'subsink'
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subs = new SubSink()
-  opened: boolean
+  opened!: boolean
 
   constructor(
     iconRegistry: MatIconRegistry,
@@ -118,7 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     public media: MediaObserver
   ) {
-    this.opened = false
     iconRegistry.addSvgIcon(
       'lemon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/lemon.svg')

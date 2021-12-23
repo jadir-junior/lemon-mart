@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## angular cli shortcuts
+
+Gererate the `home` component with inline template and styles
+
+```
+npx ng g c home -m app --inline-tamplate --inline-style
+```

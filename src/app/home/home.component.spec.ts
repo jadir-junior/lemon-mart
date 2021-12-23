@@ -4,6 +4,7 @@ import { AuthService } from '../auth/auth.service'
 import { By } from '@angular/platform-browser'
 import { HomeComponent } from './home.component'
 import { RouterTestingModule } from '@angular/router/testing'
+import { createComponentMock } from 'angular-unit-test-helper'
 
 describe('HomeComponent', () => {
   let component: HomeComponent
@@ -11,7 +12,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [HomeComponent, createComponentMock('LoginComponent')],
       imports: [RouterTestingModule],
       providers: [AuthService],
     }).compileComponents()
@@ -20,17 +21,26 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
-  it('should create with title "Hello, Limoncu!" and a button with name "Login as Manager"', () => {
-    const titleEl: HTMLElement = fixture.debugElement.query(By.css('span')).nativeElement
-    const loginButtonEl: HTMLButtonElement = fixture.debugElement.query(
-      By.css('button')
+  it('should show a login form if display login is true', () => {
+    fixture.detectChanges()
+
+    const loginComponent = fixture.debugElement.query(By.css('app-login'))
+
+    expect(loginComponent).toBeTruthy()
+  })
+
+  it('should render a message if display login is false', () => {
+    component.displayLogin = false
+    fixture.detectChanges()
+
+    const messageEl: HTMLElement = fixture.debugElement.query(
+      By.css('span')
     ).nativeElement
 
-    expect(component).toBeTruthy()
-    expect(titleEl.textContent).toBe('Hello, Limoncu!')
-    expect(loginButtonEl.textContent?.trim()).toBe('Login as Manager')
+    expect(messageEl.textContent).toBe(
+      'You get a lemon, you get a lemon, you get a lemon...'
+    )
   })
 })

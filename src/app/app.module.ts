@@ -9,12 +9,14 @@ import { BrowserModule } from '@angular/platform-browser'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { HomeComponent } from './home/home.component'
 import { InMemoryAuthService } from './auth/auth.inmemory.service'
+import { LoginComponent } from './login/login.component'
 import { MaterialModule } from './material.module'
 import { NgModule } from '@angular/core'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PageNotFoundComponent],
+  declarations: [AppComponent, HomeComponent, PageNotFoundComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,6 +24,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: AuthService, useClass: InMemoryAuthService },

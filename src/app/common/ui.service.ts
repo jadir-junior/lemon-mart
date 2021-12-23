@@ -3,7 +3,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { SimpleDialogComponent } from './simple-dialog/simple-dialog.component'
+import { SimpleDialogComponent } from './simple-dialog.component'
 
 @Injectable({
   providedIn: 'root',

@@ -14,7 +14,7 @@ import { MaterialModule } from './material.module'
 import { NgModule } from '@angular/core'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { ReactiveFormsModule } from '@angular/forms'
-import { SimpleDialogComponent } from './common/simple-dialog/simple-dialog.component'
+import { SimpleDialogComponent } from './common/simple-dialog.component'
 
 @NgModule({
   declarations: [

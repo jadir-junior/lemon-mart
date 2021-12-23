@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* import-sort-ignore */
 import { Component, Inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
@@ -27,7 +29,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 export class SimpleDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SimpleDialogComponent, boolean>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 }

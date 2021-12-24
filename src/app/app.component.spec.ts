@@ -1,5 +1,4 @@
 import { AuthService, defaultAuthStatus } from './auth/auth.service'
-import { Component, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MediaObserverFake, commonTestingModules } from './common/common.testing'
 import {
@@ -11,6 +10,7 @@ import {
 
 import { AppComponent } from './app.component'
 import { By } from '@angular/platform-browser'
+import { DebugElement } from '@angular/core'
 import { Location } from '@angular/common'
 import { MatSidenavContainer } from '@angular/material/sidenav'
 import { MediaObserver } from '@angular/flex-layout'

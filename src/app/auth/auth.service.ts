@@ -112,7 +112,7 @@ export abstract class AuthService extends CacheService implements IAuthService {
 
   protected abstract transformJwtToken(token: unknown): IAuthStatus
 
-  protected abstract getCurrentUser(): Observable<IUser>
+  protected abstract getCurrentUser(): Observable<User>
 
   protected setToken(jwt: string) {
     this.setItem('jwt', jwt)

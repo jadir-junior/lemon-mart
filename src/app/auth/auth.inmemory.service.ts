@@ -1,6 +1,6 @@
 import { AuthService, IAuthStatus, IServerAuthResponse } from './auth.service'
-import { IUser, PhoneType, User } from '../user/user/user'
 import { Observable, of, throwError } from 'rxjs'
+import { PhoneType, User } from '../user/user/user'
 
 import { Injectable } from '@angular/core'
 import { Role } from './auth.enum'
@@ -79,7 +79,7 @@ export class InMemoryAuthService extends AuthService {
     return token
   }
 
-  protected getCurrentUser(): Observable<IUser> {
+  protected getCurrentUser(): Observable<User> {
     return of(this.defaultUser)
   }
 }

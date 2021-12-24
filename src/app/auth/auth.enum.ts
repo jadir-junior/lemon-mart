@@ -7,6 +7,6 @@ export enum Role {
 
 export enum AuthMode {
   InMemory = 'In Memory',
-  CustomServicer = 'Custom Server',
+  CustomServer = 'Custom Server',
   Firebase = 'Firebase',
 }

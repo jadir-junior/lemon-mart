@@ -86,7 +86,7 @@
     "src/**/*.{ts,css,html}": [
       "npm run style"
     ],
-    "src/**/*.{ts}": [
+    "src/**/*.ts": [
       "npm run lint:staged"
     ]
   }

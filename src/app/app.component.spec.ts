@@ -56,7 +56,7 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     fixture.detectChanges()
-    expect(app).toBeFalsy()
+    expect(app).toBeTruthy()
   })
 
   it('should render a toolbar with a button "LemonMart" and when clicked should redirect to "/home"', async () => {

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { commonTestingModules, commonTestingProviders } from '../common/common.testing'
 
 import { AuthService } from '../auth/auth.service'
 import { LoginComponent } from './login.component'
@@ -14,13 +15,8 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [
-        ReactiveFormsModule,
-        RouterTestingModule,
-        MaterialModule,
-        NoopAnimationsModule,
-      ],
-      providers: [AuthService],
+      imports: commonTestingModules,
+      providers: commonTestingProviders,
     }).compileComponents()
   })
 

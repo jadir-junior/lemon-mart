@@ -13,5 +13,5 @@ export function transformError(error: HttpErrorResponse | string) {
     errorMessage = error.message
   }
 
-  return throwError(errorMessage)
+  return throwError(() => errorMessage)
 }

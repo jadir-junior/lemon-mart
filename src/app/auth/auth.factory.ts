@@ -13,6 +13,6 @@ export function authFactory(afAuth: AngularFireAuth, httpClient: HttpClient) {
     case AuthMode.Firebase:
       return new FirebaseAuthService(afAuth)
     case AuthMode.CustomServer:
-      throw new AuthCustomService(httpClient)
+      return new AuthCustomService(httpClient)
   }
 }

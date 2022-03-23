@@ -23,7 +23,7 @@
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "pre-push": "npm run test:pre-push",
-    "predocker:build": "npm run build",
+    "predocker:build": "npm run build:server",
     "docker:build": "cross-conf-env docker image build . -t $npm_package_config_imageRepo:$npm_package_version",
     "postdocker:build": "npm run docker:tag",
     "docker:tag": "cross-conf-env docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",

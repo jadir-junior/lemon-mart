@@ -15,7 +15,8 @@ export const environment = {
     measurementId: 'G-ZDEDHK4L8X',
   },
   production: false,
-  authMode: AuthMode.InMemory,
+  baseUrl: 'http://localhost:3000',
+  authMode: AuthMode.CustomServer,
 }
 
 /*

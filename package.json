@@ -18,9 +18,8 @@
     "test:ci": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "test:pre-push": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "style": "import-sort -l '**/{src,tests,e2e}/**/*.ts' && prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
-    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.ts' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.ts' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}'",
     "lint": "ng lint --max-warnings=0",
-    "lint:staged": "eslint src --max-warnings=0",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "pre-push": "npm run test:pre-push",
@@ -89,7 +88,6 @@
     "import-sort-cli": "^6.0.0",
     "import-sort-parser-typescript": "^6.0.0",
     "jasmine-core": "~4.0.0",
-    "js-beautify": "^1.14.0",
     "karma": "~6.3.10",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
@@ -108,10 +106,11 @@
   },
   "lint-staged": {
     "src/**/*.{ts,css,html}": [
-      "npm run style"
+      "prettier --check",
+      "eslint --max-warnings=0"
     ],
     "src/**/*.ts": [
-      "npm run lint:staged"
+      "import-sort -l"
     ]
   }
 }

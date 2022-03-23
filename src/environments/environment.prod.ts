@@ -11,5 +11,6 @@ export const environment = {
     measurementId: 'G-ZDEDHK4L8X',
   },
   production: true,
-  authMode: AuthMode.Firebase,
+  authMode: AuthMode.CustomServer,
+  baseUrl: 'http://localhost:3000',
 }

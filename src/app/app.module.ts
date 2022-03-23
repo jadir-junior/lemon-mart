@@ -1,5 +1,5 @@
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
 
 import { AngularFireModule } from '@angular/fire/compat'
 import { AppComponent } from './app.component'
@@ -42,7 +42,11 @@ import { environment } from '../environments/environment'
     AngularFireAuthModule,
   ],
   providers: [
-    { provide: AuthService, useFactory: authFactory, deps: [AngularFireAuth] },
+    {
+      provide: AuthService,
+      useFactory: authFactory,
+      deps: [AngularFireAuth, HttpClient],
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,

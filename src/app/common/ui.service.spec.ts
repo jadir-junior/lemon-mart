@@ -1,4 +1,4 @@
-import { MaterialModule } from '../material.module'
+import { AppMaterialModule } from '../app-material.module'
 import { TestBed } from '@angular/core/testing'
 import { UiService } from './ui.service'
 
@@ -7,7 +7,7 @@ describe('UiService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule],
+      imports: [AppMaterialModule],
     })
     service = TestBed.inject(UiService)
   })

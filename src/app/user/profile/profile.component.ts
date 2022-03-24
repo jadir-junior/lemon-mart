@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   Role = Role
   PhoneType = PhoneType
   PhoneTypes = $enum(PhoneType).getKeys()
-  formGroup: FormGroup | undefined
+  formGroup!: FormGroup
   states$: Observable<IUSState[]> | undefined
   userError = ''
 
@@ -82,5 +82,9 @@ export class ProfileComponent implements OnInit {
         zip: [user?.address?.zip || '', USAZipCodeValidation],
       }),
     })
+  }
+
+  get name() {
+    return this.formGroup.get('name') as FormGroup
   }
 }

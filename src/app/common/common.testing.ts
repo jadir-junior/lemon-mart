@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Observable, Subscription, of } from 'rxjs'
 
+import { AppMaterialModule } from '../app-material.module'
 import { AuthService } from '../auth/auth.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { MaterialModule } from '../material.module'
 import { MediaChange } from '@angular/flex-layout'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -38,7 +38,7 @@ export const commonTestingProviders: any[] = [
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const commonTestingModules: any[] = [
-  MaterialModule,
+  AppMaterialModule,
   NoopAnimationsModule,
   HttpClientTestingModule,
   RouterTestingModule,

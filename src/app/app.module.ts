@@ -9,6 +9,7 @@ import { AuthHttpInterceptor } from './auth/auth-http-interceptor'
 import { AuthService } from './auth/auth.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser'
+import { FieldErrorModule } from './user-controls/field-error/field-error.module'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
@@ -40,6 +41,7 @@ import { environment } from '../environments/environment'
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    FieldErrorModule,
   ],
   providers: [
     {

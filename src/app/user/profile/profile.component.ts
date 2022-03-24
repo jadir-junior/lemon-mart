@@ -12,6 +12,7 @@ import { Observable, filter, tap } from 'rxjs'
 
 import { $enum } from 'ts-enum-util'
 import { AuthService } from 'src/app/auth/auth.service'
+import { ErrorSets } from 'src/app/user-controls/field-error/field-error.directive'
 import { IUSState } from './data'
 import { Role } from 'src/app/auth/auth.enum'
 import { UiService } from 'src/app/common/ui.service'
@@ -38,6 +39,8 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService
   ) {}
+
+  ErrorSets = ErrorSets
 
   ngOnInit(): void {
     this.buildForm()
@@ -84,7 +87,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  get name() {
+  formGroupName(): FormGroup {
     return this.formGroup.get('name') as FormGroup
   }
 }

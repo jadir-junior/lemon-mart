@@ -11,7 +11,7 @@
           <div
             fxLayout="row"
             fxLayout.lt-sm="column"
-            [formGroup]="name"
+            [formGroup]="formGroupName()"
             fxLayoutGap="10px"
           >
             <mat-form-field appearance="outline" fxFlex="40%">
@@ -20,16 +20,13 @@
                 placeholder="First Name"
                 aria-label="First Name"
                 formControlName="first"
+                #name
               />
-              <mat-error *ngIf="name.get('first')?.hasError('required')">
-                First Name is required
-              </mat-error>
-              <mat-error *ngIf="name.get('first')?.hasError('minLength')">
-                Must be at least 2 characters
-              </mat-error>
-              <mat-error *ngIf="name.get('first')?.hasError('maxLength')">
-                Can't exceed 50 characters
-              </mat-error>
+              <mat-error
+                [input]="name"
+                [group]="formGroupName()"
+                [appFieldError]="ErrorSets['RequiredText']"
+              ></mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="20%">
               <input
@@ -37,8 +34,13 @@
                 placeholder="MI"
                 aria-label="Middle Initial"
                 formControlName="middle"
+                #middle
               />
-              <mat-error *ngIf="name.get('middle')?.invalid"> Only initial </mat-error>
+              <mat-error
+                [input]="middle"
+                [group]="formGroupName()"
+                [appFieldError]="{ error: 'invalid', message: 'Only initial' }"
+              ></mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="40%">
               <input
@@ -46,16 +48,13 @@
                 placeholder="Last Name"
                 aria-label="Last Name"
                 formControlName="last"
+                #last
               />
-              <mat-error *ngIf="name.get('last')?.hasError('required')">
-                Last Name is required
-              </mat-error>
-              <mat-error *ngIf="name.get('last')?.hasError('minLength')">
-                Must be at least 2 characters
-              </mat-error>
-              <mat-error *ngIf="name.get('last')?.hasError('maxLength')">
-                Can't exceed 50 characters
-              </mat-error>
+              <mat-error
+                [input]="last"
+                [group]="formGroupName()"
+                [appFieldError]="ErrorSets['RequiredText']"
+              ></mat-error>
             </mat-form-field>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { AppMaterialModule } from '../app-material.module'
 import { CommonModule } from '@angular/common'
+import { FieldErrorModule } from '../user-controls/field-error/field-error.module'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { LogoutComponent } from './logout/logout.component'
 import { NgModule } from '@angular/core'
@@ -17,6 +18,7 @@ import { UserRoutingModule } from './user-routing.module'
     AppMaterialModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    FieldErrorModule,
   ],
 })
 export class UserModule {}

@@ -86,6 +86,31 @@
                 }"
               ></mat-error>
             </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              fxFlex="30%"
+              [formGroup]="formGroupAddress()"
+            >
+              <mat-label>State</mat-label>
+              <input
+                type="text"
+                aria-label="State"
+                matInput
+                formControlName="state"
+                [matAutocomplete]="stateAuto"
+                #state
+              />
+              <mat-autocomplete #stateAuto="matAutocomplete">
+                <mat-option *ngFor="let state of states$ | async" [value]="state.name">{{
+                  state.name
+                }}</mat-option>
+              </mat-autocomplete>
+              <mat-error
+                [input]="state"
+                [group]="formGroupAddress()"
+                appFieldError="required"
+              ></mat-error>
+            </mat-form-field>
           </div>
         </div>
       </form>

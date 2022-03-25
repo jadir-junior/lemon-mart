@@ -7,13 +7,13 @@ import {
   USAZipCodeValidation,
 } from 'src/app/common/validations'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { IUSState, USStateFilter } from './data'
 import { IUser, PhoneType } from '../user/user'
-import { Observable, filter, tap } from 'rxjs'
+import { Observable, filter, map, startWith, tap } from 'rxjs'
 
 import { $enum } from 'ts-enum-util'
 import { AuthService } from 'src/app/auth/auth.service'
 import { ErrorSets } from 'src/app/user-controls/field-error/field-error.directive'
-import { IUSState } from './data'
 import { Role } from 'src/app/auth/auth.enum'
 import { UiService } from 'src/app/common/ui.service'
 import { UserService } from '../user/user.service'
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   Role = Role
   PhoneType = PhoneType
   PhoneTypes = $enum(PhoneType).getKeys()
-  formGroup: FormGroup = this.buildForm()
+  formGroup!: FormGroup
   states$: Observable<IUSState[]> | undefined
   userError = ''
 
@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
         filter((user) => user !== null),
         tap((user) => {
           this.currentUserId = user._id
-          this.formGroup = this.buildForm(user)
+          this.buildForm(user)
         })
       )
       .subscribe()
@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private buildForm(user?: IUser) {
-    return this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       email: [
         { value: user?.email || '', disabled: this.currentUserRole !== Role.Manager },
         EmailValidation,
@@ -87,10 +87,19 @@ export class ProfileComponent implements OnInit {
       address: this.formBuilder.group({
         line1: [user?.address?.line1 || '', RequiredTextValidation],
         line2: [user?.address?.line2 || '', OptionalTextValidation],
-        city: [user?.address?.state || '', RequiredTextValidation],
+        city: [user?.address?.city || '', RequiredTextValidation],
+        state: [user?.address?.state || '', RequiredTextValidation],
         zip: [user?.address?.zip || '', USAZipCodeValidation],
       }),
     })
+
+    const state = this.formGroup.get('address.state')
+    if (state !== null) {
+      this.states$ = state.valueChanges.pipe(
+        startWith(''),
+        map((value) => USStateFilter(value))
+      )
+    }
   }
 
   get dateOfBirth() {
@@ -103,5 +112,9 @@ export class ProfileComponent implements OnInit {
 
   formGroupName(): FormGroup {
     return this.formGroup?.get('name') as FormGroup
+  }
+
+  formGroupAddress(): FormGroup {
+    return this.formGroup.get('address') as FormGroup
   }
 }

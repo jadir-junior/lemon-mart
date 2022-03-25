@@ -88,7 +88,7 @@
             </mat-form-field>
             <mat-form-field
               appearance="outline"
-              fxFlex="30%"
+              fxFlex="50%"
               [formGroup]="formGroupAddress()"
             >
               <mat-label>State</mat-label>
@@ -111,6 +111,52 @@
                 appFieldError="required"
               ></mat-error>
             </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px">
+            <mat-list formArrayName="phones">
+              <h2 mat-subheader>
+                Phone Number(s)
+                <button mat-button (click)="addPhone()">
+                  <mat-icon>add</mat-icon> Add Phone
+                </button>
+              </h2>
+              <mat-list-item
+                style="margin-top: 36px"
+                *ngFor="let position of phonesArray.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <mat-form-field appearance="outline" fxFlex="100px">
+                  <mat-label>Type</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option
+                      *ngFor="let type of PhoneTypes"
+                      [value]="convertTypeToPhoneType(type)"
+                      >{{ type }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex fxFlexOffset="10px">
+                  <mat-label>Number</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    formControlName="digits"
+                    aria-label="Phone number"
+                    prefix="+1"
+                  />
+                  <mat-error
+                    *ngIf="
+                      phonesArray.controls[i].invalid && phonesArray.controls[i].touched
+                    "
+                  >
+                    A valid phone number is required
+                  </mat-error>
+                </mat-form-field>
+                <button fxFlex="33px" mat-icon-button (click)="phonesArray.removeAt(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
           </div>
         </div>
       </form>

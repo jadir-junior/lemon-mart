@@ -4,11 +4,12 @@ import {
   OneCharValidation,
   OptionalTextValidation,
   RequiredTextValidation,
+  USAPhoneNumberValidation,
   USAZipCodeValidation,
 } from 'src/app/common/validations'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { IPhone, IUser, PhoneType } from '../user/user'
 import { IUSState, USStateFilter } from './data'
-import { IUser, PhoneType } from '../user/user'
 import { Observable, filter, map, startWith, tap } from 'rxjs'
 
 import { $enum } from 'ts-enum-util'
@@ -91,6 +92,7 @@ export class ProfileComponent implements OnInit {
         state: [user?.address?.state || '', RequiredTextValidation],
         zip: [user?.address?.zip || '', USAZipCodeValidation],
       }),
+      phones: this.formBuilder.array(this.buildPhoneArray(user?.phones || [])),
     })
 
     const state = this.formGroup.get('address.state')
@@ -116,5 +118,41 @@ export class ProfileComponent implements OnInit {
 
   formGroupAddress(): FormGroup {
     return this.formGroup.get('address') as FormGroup
+  }
+
+  private buildPhoneArray(phones: IPhone[]) {
+    const groups = []
+
+    if (phones?.length === 0) {
+      groups.push(this.buildPhoneFormControl(1))
+    } else {
+      phones.forEach((p) => {
+        groups.push(this.buildPhoneFormControl(p.id, p.type, p.digits))
+      })
+    }
+
+    return groups
+  }
+
+  private buildPhoneFormControl(id: number, type?: string, phoneNumber?: string) {
+    return this.formBuilder.group({
+      id: [id],
+      type: [type || '', Validators.required],
+      digits: [phoneNumber || '', USAPhoneNumberValidation],
+    })
+  }
+
+  addPhone() {
+    this.phonesArray.push(
+      this.buildPhoneFormControl(this.formGroup.get('phones')?.value.length + 1)
+    )
+  }
+
+  get phonesArray(): FormArray {
+    return this.formGroup.get('phones') as FormArray
+  }
+
+  convertTypeToPhoneType(type: string): PhoneType {
+    return PhoneType[$enum(PhoneType).asKeyOrThrow(type)]
   }
 }

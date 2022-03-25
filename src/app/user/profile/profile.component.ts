@@ -27,9 +27,16 @@ export class ProfileComponent implements OnInit {
   Role = Role
   PhoneType = PhoneType
   PhoneTypes = $enum(PhoneType).getKeys()
-  formGroup!: FormGroup
+  formGroup: FormGroup = this.buildForm()
   states$: Observable<IUSState[]> | undefined
   userError = ''
+
+  now = new Date()
+  minDate = new Date(
+    this.now.getFullYear() - 100,
+    this.now.getMonth(),
+    this.now.getDate()
+  )
 
   currentUserId: string | undefined
 
@@ -43,13 +50,12 @@ export class ProfileComponent implements OnInit {
   ErrorSets = ErrorSets
 
   ngOnInit(): void {
-    this.buildForm()
     this.authService.currentUser$
       .pipe(
         filter((user) => user !== null),
         tap((user) => {
           this.currentUserId = user._id
-          this.buildForm(user)
+          this.formGroup = this.buildForm(user)
         })
       )
       .subscribe()
@@ -60,7 +66,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private buildForm(user?: IUser) {
-    this.formGroup = this.formBuilder.group({
+    return this.formBuilder.group({
       email: [
         { value: user?.email || '', disabled: this.currentUserRole !== Role.Manager },
         EmailValidation,
@@ -87,7 +93,15 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  get dateOfBirth() {
+    return this.formGroup.get('dateOfBirth')?.value || this.now
+  }
+
+  get age() {
+    return this.now.getFullYear() - this.dateOfBirth.getFullYear()
+  }
+
   formGroupName(): FormGroup {
-    return this.formGroup.get('name') as FormGroup
+    return this.formGroup?.get('name') as FormGroup
   }
 }

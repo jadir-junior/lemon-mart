@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 import { catchError, combineLatest, filter, tap } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
+import { ErrorSets } from '../user-controls/field-error/field-error.directive'
 import { Role } from '../auth/auth.enum'
 import { SubSink } from 'subsink'
 import { UiService } from '../common/ui.service'
@@ -42,6 +43,8 @@ export class LoginComponent implements OnInit {
       (params) => (this.redirectUrl = params.get('redirectUrl') ?? '')
     )
   }
+
+  ErrorSets = ErrorSets
 
   ngOnInit(): void {
     this.authService.logout()

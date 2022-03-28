@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
 import { Router, Routes } from '@angular/router'
 
+import { AppMaterialModule } from '../app-material.module'
 import { By } from '@angular/platform-browser'
 import { Location } from '@angular/common'
 import { ManagerComponent } from './manager.component'
-import { MaterialModule } from '../material.module'
 import { RouterTestingModule } from '@angular/router/testing'
 import { createComponentMock } from 'angular-unit-test-helper'
 
@@ -29,7 +29,7 @@ describe('ManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), MaterialModule],
+      imports: [RouterTestingModule.withRoutes(routes), AppMaterialModule],
       declarations: [ManagerComponent],
     }).compileComponents()
 

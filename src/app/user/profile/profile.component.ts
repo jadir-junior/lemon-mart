@@ -16,6 +16,7 @@ import { $enum } from 'ts-enum-util'
 import { AuthService } from 'src/app/auth/auth.service'
 import { ErrorSets } from 'src/app/user-controls/field-error/field-error.directive'
 import { Role } from 'src/app/auth/auth.enum'
+import { SubSink } from 'subsink'
 import { UiService } from 'src/app/common/ui.service'
 import { UserService } from '../user/user.service'
 
@@ -39,7 +40,9 @@ export class ProfileComponent implements OnInit {
     this.now.getDate()
   )
 
-  currentUserId: string | undefined
+  private subs = new SubSink()
+
+  currentUserId!: string
 
   constructor(
     private formBuilder: FormBuilder,
@@ -154,5 +157,17 @@ export class ProfileComponent implements OnInit {
 
   convertTypeToPhoneType(type: string): PhoneType {
     return PhoneType[$enum(PhoneType).asKeyOrThrow(type)]
+  }
+
+  async save(form: FormGroup) {
+    this.subs.add(
+      this.userService.updateUser(this.currentUserId, form.value).subscribe({
+        next: (res: IUser) => {
+          this.formGroup.patchValue(res)
+          this.uiService.showToast('Updated user')
+        },
+        error: (err: string) => (this.userError = err),
+      })
+    )
   }
 }

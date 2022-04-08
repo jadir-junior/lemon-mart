@@ -1,24 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { commonTestingModules, commonTestingProviders } from '../common/common.testing'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
-import { LoginComponent } from './login.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { NameInputComponent } from './name-input.component'
 
-describe('LoginComponent', () => {
-  let component: LoginComponent
-  let fixture: ComponentFixture<LoginComponent>
+describe('NameInputComponent', () => {
+  let component: NameInputComponent
+  let fixture: ComponentFixture<NameInputComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: commonTestingModules,
-      providers: commonTestingProviders,
+      declarations: [NameInputComponent],
+      imports: [ReactiveFormsModule, FormsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent)
+    fixture = TestBed.createComponent(NameInputComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

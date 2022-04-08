@@ -1,5 +1,6 @@
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
+import { IConfig, NgxMaskModule } from 'ngx-mask'
 
 import { AngularFireModule } from '@angular/fire/compat'
 import { AppComponent } from './app.component'
@@ -22,6 +23,9 @@ import { SimpleDialogComponent } from './common/simple-dialog.component'
 import { authFactory } from './auth/auth.factory'
 import { environment } from '../environments/environment'
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
+  showMaskTyped: true,
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +46,7 @@ import { environment } from '../environments/environment'
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     FieldErrorModule,
+    NgxMaskModule.forRoot(options),
   ],
   providers: [
     {

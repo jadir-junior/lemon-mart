@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { LogoutComponent } from './logout/logout.component'
 import { NameInputComponent } from './name-input/name-input.component'
 import { NgModule } from '@angular/core'
+import { NgxMaskModule } from 'ngx-mask'
 import { ProfileComponent } from './profile/profile.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { UserMaterialModule } from './user-material.module'
@@ -26,6 +27,7 @@ import { ViewUserComponent } from './view-user/view-user.component'
     ReactiveFormsModule,
     FlexLayoutModule,
     FieldErrorModule,
+    NgxMaskModule.forChild(),
   ],
 })
 export class UserModule {}

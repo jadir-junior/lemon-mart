@@ -9,8 +9,8 @@ import {
 } from '@angular/core'
 
 @Directive()
-export abstract class BaseFormComponent<TFormData extends object> {
-  @Input() initialData!: TFormData
+export abstract class BaseFormDirective<TFormData extends object> {
+  @Input() initialData!: TFormData | null
   @Input() disable!: boolean
   @Output() formReady: EventEmitter<AbstractControl>
   formGroup!: FormGroup
@@ -21,10 +21,12 @@ export abstract class BaseFormComponent<TFormData extends object> {
     this.formReady = new EventEmitter<AbstractControl>(true)
   }
 
-  abstract buildForm(initialData?: TFormData): FormGroup
+  abstract buildForm(initialData?: TFormData | null): FormGroup
 
-  patchUpdatedData(data: object) {
-    this.formGroup.patchValue(data, { onlySelf: false })
+  patchUpdatedData(data: object | null) {
+    if (data) {
+      this.formGroup.patchValue(data, { onlySelf: false })
+    }
   }
 
   patchUpdatedDataIfChanged(changes: SimpleChanges) {
@@ -48,7 +50,7 @@ export abstract class BaseFormComponent<TFormData extends object> {
     }
   }
 
-  protected deregisterAllForm() {
+  protected deregisterAllForms() {
     this.registeredForms.forEach((name) => this.deregisterForm(name))
   }
 

@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core'
+import { BehaviorSubject, Observable, filter, map, startWith, tap } from 'rxjs'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import {
   EmailValidation,
-  OneCharValidation,
   OptionalTextValidation,
   RequiredTextValidation,
   USAPhoneNumberValidation,
   USAZipCodeValidation,
 } from 'src/app/common/validations'
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { IPhone, IUser, PhoneType } from '../user/user'
+import { IName, IPhone, IUser, PhoneType } from '../user/user'
 import { IUSState, USStateFilter } from './data'
-import { Observable, filter, map, startWith, tap } from 'rxjs'
 
 import { $enum } from 'ts-enum-util'
 import { AuthService } from 'src/app/auth/auth.service'
+import { BaseFormDirective } from 'src/app/common/base-form.class'
 import { ErrorSets } from 'src/app/user-controls/field-error/field-error.directive'
 import { Role } from 'src/app/auth/auth.enum'
 import { SubSink } from 'subsink'
@@ -25,11 +25,18 @@ import { UserService } from '../user/user.service'
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent
+  extends BaseFormDirective<IUser>
+  implements OnInit, OnDestroy
+{
+  readonly nameInitialData$ = new BehaviorSubject<IName>({
+    first: '',
+    middle: '',
+    last: '',
+  })
   Role = Role
   PhoneType = PhoneType
   PhoneTypes = $enum(PhoneType).getKeys()
-  formGroup!: FormGroup
   states$: Observable<IUSState[]> | undefined
   userError = ''
 
@@ -49,37 +56,45 @@ export class ProfileComponent implements OnInit {
     private uiService: UiService,
     private userService: UserService,
     private authService: AuthService
-  ) {}
+  ) {
+    super()
+  }
 
   ErrorSets = ErrorSets
 
   ngOnInit(): void {
-    this.authService.currentUser$
+    this.formGroup = this.buildForm()
+
+    this.subs.sink = this.authService.currentUser$
       .pipe(
         filter((user) => user !== null),
         tap((user) => {
           this.currentUserId = user._id
           this.buildForm(user)
+          this.patchUser(user)
+          this.nameInitialData$.next(user.name)
         })
       )
       .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+    this.deregisterAllForms()
   }
 
   private get currentUserRole() {
     return this.authService.authStatus$.value.userRole
   }
 
-  private buildForm(user?: IUser) {
-    this.formGroup = this.formBuilder.group({
+  buildForm(initialData?: IUser) {
+    const user = initialData
+    const form = this.formBuilder.group({
       email: [
         { value: user?.email || '', disabled: this.currentUserRole !== Role.Manager },
         EmailValidation,
       ],
-      name: this.formBuilder.group({
-        first: [user?.name?.first || '', RequiredTextValidation],
-        middle: [user?.name?.middle || '', OneCharValidation],
-        last: [user?.name?.last || '', RequiredTextValidation],
-      }),
+      name: null,
       role: [
         {
           value: user?.role || '',
@@ -98,13 +113,12 @@ export class ProfileComponent implements OnInit {
       phones: this.formBuilder.array(this.buildPhoneArray(user?.phones || [])),
     })
 
-    const state = this.formGroup.get('address.state')
-    if (state !== null) {
-      this.states$ = state.valueChanges.pipe(
-        startWith(''),
-        map((value) => USStateFilter(value))
-      )
-    }
+    this.states$ = form.get('address.state')?.valueChanges.pipe(
+      startWith(''),
+      map((value) => USStateFilter(value))
+    )
+
+    return form
   }
 
   get dateOfBirth() {
@@ -115,8 +129,12 @@ export class ProfileComponent implements OnInit {
     return this.now.getFullYear() - this.dateOfBirth.getFullYear()
   }
 
-  formGroupName(): FormGroup {
-    return this.formGroup?.get('name') as FormGroup
+  patchUser(user: IUser) {
+    if (user) {
+      this.currentUserId = user._id
+      this.patchUpdatedData(user)
+      this.nameInitialData$.next(user.name)
+    }
   }
 
   formGroupAddress(): FormGroup {

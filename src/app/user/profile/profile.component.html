@@ -224,6 +224,8 @@
                     formControlName="digits"
                     aria-label="Phone number"
                     prefix="+1"
+                    mask="(000) 000-0000"
+                    [showMaskTyped]="true"
                   />
                   <mat-error
                     *ngIf="

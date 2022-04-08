@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ViewUserComponent } from './view-user.component'
 
@@ -11,6 +12,7 @@ describe('ViewUserComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [ViewUserComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 

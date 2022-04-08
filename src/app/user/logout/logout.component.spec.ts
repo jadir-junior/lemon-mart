@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AuthService } from 'src/app/auth/auth.service'
 import { LogoutComponent } from './logout.component'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { RouterTestingModule } from '@angular/router/testing'
 
 describe('LogoutComponent', () => {
@@ -13,6 +14,7 @@ describe('LogoutComponent', () => {
       declarations: [LogoutComponent],
       imports: [RouterTestingModule],
       providers: [AuthService],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 

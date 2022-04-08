@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AppMaterialModule } from '../../app-material.module'
 import { AuthService } from 'src/app/auth/auth.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ProfileComponent } from './profile.component'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -23,6 +24,7 @@ describe('ProfileComponent', () => {
       ],
       declarations: [ProfileComponent],
       providers: [AuthService],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 

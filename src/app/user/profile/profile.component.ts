@@ -87,7 +87,7 @@ export class ProfileComponent
     return this.authService.authStatus$.value.userRole
   }
 
-  buildForm(initialData?: IUser) {
+  buildForm(initialData?: IUser): FormGroup {
     const user = initialData
     const form = this.formBuilder.group({
       email: [
@@ -111,6 +111,7 @@ export class ProfileComponent
         zip: [user?.address?.zip || '', USAZipCodeValidation],
       }),
       phones: this.formBuilder.array(this.buildPhoneArray(user?.phones || [])),
+      level: [user?.level || 0, Validators.required],
     })
 
     this.states$ = form.get('address.state')?.valueChanges.pipe(

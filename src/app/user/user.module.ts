@@ -2,6 +2,7 @@ import { AppMaterialModule } from '../app-material.module'
 import { CommonModule } from '@angular/common'
 import { FieldErrorModule } from '../user-controls/field-error/field-error.module'
 import { FlexLayoutModule } from '@angular/flex-layout'
+import { LemonRaterModule } from '../user-controls/lemon-rater/lemon-rater.module'
 import { LogoutComponent } from './logout/logout.component'
 import { NameInputComponent } from './name-input/name-input.component'
 import { NgModule } from '@angular/core'
@@ -28,6 +29,7 @@ import { ViewUserComponent } from './view-user/view-user.component'
     FlexLayoutModule,
     FieldErrorModule,
     NgxMaskModule.forChild(),
+    LemonRaterModule,
   ],
 })
 export class UserModule {}

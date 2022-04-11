@@ -88,6 +88,17 @@
               <span class="mat-caption">Role is required</span>
             </mat-error>
           </div>
+          <div
+            fxLayout="row"
+            fxLayout.lt-sm="column"
+            class="margin-top"
+            fxLayoutGap="10px"
+          >
+            <mat-label class="mat-body-1"
+              >Select the Limoncu level:
+              <app-lemon-rater formControlName="level"></app-lemon-rater>
+            </mat-label>
+          </div>
           <div fxLayout="row" class="margin-top">
             <div class="flex-spacer"></div>
             <div *ngIf="userError" class="mat-caption error">{{ userError }}</div>

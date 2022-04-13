@@ -5,14 +5,14 @@ import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NgModule } from '@angular/core'
 
+const modules = [
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSlideToggleModule,
+  MatSortModule,
+  MatTableModule,
+]
 @NgModule({
-  declarations: [],
-  imports: [
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSlideToggleModule,
-    MatSortModule,
-    MatTableModule,
-  ],
+  exports: modules,
 })
 export class ManagerMaterialModule {}

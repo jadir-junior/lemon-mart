@@ -9,8 +9,14 @@ import { environment } from 'src/environments/environment'
 import { transformError } from 'src/app/common/common'
 
 export interface IUserService {
+  getUsers(pageSize: number, searchText: string, pagesToSkip: number): Observable<IUsers>
   getUser(id: string): Observable<IUser>
   updateUser(id: string, user: IUser): Observable<IUser>
+}
+
+export interface IUsers {
+  data: IUser[]
+  total: number
 }
 
 @Injectable({
@@ -19,6 +25,27 @@ export interface IUserService {
 export class UserService extends CacheService implements IUserService {
   constructor(private httpClient: HttpClient, private authService: AuthService) {
     super()
+  }
+
+  getUsers(
+    pageSize: number,
+    searchText = '',
+    pagesToSkip = 0,
+    sortColumn = '',
+    sortDirection: '' | 'asc' | 'desc' = 'asc'
+  ): Observable<IUsers> {
+    if (sortColumn) {
+      sortColumn = sortDirection === 'desc' ? `-${sortColumn}` : sortColumn
+    }
+
+    return this.httpClient.get<IUsers>(`${environment.baseUrl}/v2/users`, {
+      params: {
+        filter: searchText,
+        skip: pagesToSkip.toString(),
+        limit: pageSize.toString(),
+        sortKey: sortColumn,
+      },
+    })
   }
 
   getUser(id: string | null): Observable<IUser> {

@@ -21,6 +21,7 @@ import { IName, IPhone, IUser, PhoneType, User } from '../user/user'
 import { IUSState, USStateFilter } from './data'
 
 import { $enum } from 'ts-enum-util'
+import { ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/auth/auth.service'
 import { BaseFormDirective } from 'src/app/common/base-form.class'
 import { ErrorSets } from 'src/app/user-controls/field-error/field-error.directive'
@@ -64,7 +65,8 @@ export class ProfileComponent
     private formBuilder: FormBuilder,
     private uiService: UiService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {
     super()
   }
@@ -74,12 +76,19 @@ export class ProfileComponent
   ngOnInit(): void {
     this.formGroup = this.buildForm()
 
-    this.subs.sink = combineLatest([this.loadFromCache(), this.authService.currentUser$])
-      .pipe(
-        filter(([cachedUser, me]) => cachedUser !== null || me !== null),
-        tap(([cachedUser, me]) => this.patchUser(cachedUser || me))
-      )
-      .subscribe()
+    if (this.route.snapshot.data['user']) {
+      this.patchUser(this.route.snapshot.data['user'])
+    } else {
+      this.subs.sink = combineLatest([
+        this.loadFromCache(),
+        this.authService.currentUser$,
+      ])
+        .pipe(
+          filter(([cachedUser, me]) => cachedUser !== null || me !== null),
+          tap(([cachedUser, me]) => this.patchUser(cachedUser || me))
+        )
+        .subscribe()
+    }
   }
 
   ngOnDestroy(): void {

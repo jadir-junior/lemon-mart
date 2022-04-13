@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup
   loginError = ''
   redirectUrl!: string
+  roles = Object.keys(Role)
 
   constructor(
     private formBuilder: FormBuilder,

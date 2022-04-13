@@ -9,6 +9,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ProfileComponent } from './profile.component'
 import { ReactiveFormsModule } from '@angular/forms'
+import { RouterTestingModule } from '@angular/router/testing'
 import { UserMaterialModule } from '../user-material.module'
 
 describe('ProfileComponent', () => {
@@ -23,6 +24,7 @@ describe('ProfileComponent', () => {
         HttpClientTestingModule,
         UserMaterialModule,
         NoopAnimationsModule,
+        RouterTestingModule,
       ],
       declarations: [ProfileComponent, MockComponent(LemonRaterComponent)],
       providers: [AuthService],

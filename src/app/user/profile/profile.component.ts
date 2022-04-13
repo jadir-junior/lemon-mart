@@ -1,4 +1,13 @@
-import { BehaviorSubject, Observable, filter, map, startWith, tap } from 'rxjs'
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  filter,
+  map,
+  of,
+  startWith,
+  tap,
+} from 'rxjs'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import {
   EmailValidation,
@@ -8,7 +17,7 @@ import {
   USAZipCodeValidation,
 } from 'src/app/common/validations'
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { IName, IPhone, IUser, PhoneType } from '../user/user'
+import { IName, IPhone, IUser, PhoneType, User } from '../user/user'
 import { IUSState, USStateFilter } from './data'
 
 import { $enum } from 'ts-enum-util'
@@ -65,15 +74,10 @@ export class ProfileComponent
   ngOnInit(): void {
     this.formGroup = this.buildForm()
 
-    this.subs.sink = this.authService.currentUser$
+    this.subs.sink = combineLatest([this.loadFromCache(), this.authService.currentUser$])
       .pipe(
-        filter((user) => user !== null),
-        tap((user) => {
-          this.currentUserId = user._id
-          this.buildForm(user)
-          this.patchUser(user)
-          this.nameInitialData$.next(user.name)
-        })
+        filter(([cachedUser, me]) => cachedUser !== null || me !== null),
+        tap(([cachedUser, me]) => this.patchUser(cachedUser || me))
       )
       .subscribe()
   }
@@ -188,5 +192,27 @@ export class ProfileComponent
         error: (err: string) => (this.userError = err),
       })
     )
+  }
+
+  private loadFromCache(): Observable<User | null> {
+    let user = null
+    try {
+      const draftUser = localStorage.getItem('draft-user')
+      if (draftUser !== null) {
+        user = User.Build(JSON.parse(draftUser))
+      }
+
+      if (user) {
+        this.uiService.showToast('Loaded data from cache')
+      }
+    } catch (error) {
+      localStorage.removeItem('draft-user')
+    }
+
+    return of(user)
+  }
+
+  clearCache() {
+    localStorage.removeItem('draft-user')
   }
 }

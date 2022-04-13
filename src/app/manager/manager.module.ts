@@ -7,6 +7,7 @@ import { ManagerRoutingModule } from './manager-routing.module'
 import { NgModule } from '@angular/core'
 import { ReceiptLookupComponent } from './receipt-lookup/receipt-lookup.component'
 import { UserManagementComponent } from './user-management/user-management.component'
+import { UserTableComponent } from './user-table/user-table.component'
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
     ManagerComponent,
     UserManagementComponent,
     ReceiptLookupComponent,
+    UserTableComponent,
   ],
   imports: [CommonModule, ManagerRoutingModule, AppMaterialModule, FlexLayoutModule],
 })

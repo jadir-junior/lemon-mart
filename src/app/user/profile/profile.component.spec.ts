@@ -1,44 +1,62 @@
+import { AuthService, defaultAuthStatus } from 'src/app/auth/auth.service'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ObservablePropertyStrategy,
+  autoSpyObj,
+  injectSpy,
+} from 'angular-unit-test-helper'
+import {
+  commonTestingModules,
+  commonTestingProviders,
+} from 'src/app/common/common.testing'
 
-import { AppMaterialModule } from '../../app-material.module'
-import { AuthService } from 'src/app/auth/auth.service'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { LemonRaterComponent } from 'src/app/user-controls/lemon-rater/lemon-rater.component'
-import { MockComponent } from 'ng-mocks'
+import { FieldErrorModule } from 'src/app/user-controls/field-error/field-error.module'
+import { LemonRaterModule } from 'src/app/user-controls/lemon-rater/lemon-rater.module'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { NameInputComponent } from '../name-input/name-input.component'
 import { ProfileComponent } from './profile.component'
-import { ReactiveFormsModule } from '@angular/forms'
-import { RouterTestingModule } from '@angular/router/testing'
+import { User } from '../user/user'
 import { UserMaterialModule } from '../user-material.module'
+import { ViewUserComponent } from '../view-user/view-user.component'
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent
   let fixture: ComponentFixture<ProfileComponent>
+  let authServiceMock: jasmine.SpyObj<AuthService>
 
   beforeEach(async () => {
+    const authServiceSpy = autoSpyObj(
+      AuthService,
+      ['currentUser$', 'authStatus$'],
+      ObservablePropertyStrategy.BehaviorSubject
+    )
+
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        AppMaterialModule,
-        HttpClientTestingModule,
+      imports: commonTestingModules.concat([
         UserMaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule,
-      ],
-      declarations: [ProfileComponent, MockComponent(LemonRaterComponent)],
-      providers: [AuthService],
+        FieldErrorModule,
+        LemonRaterModule,
+      ]),
+      declarations: [ProfileComponent, NameInputComponent, ViewUserComponent],
+      providers: commonTestingProviders.concat({
+        provide: AuthService,
+        useValue: authServiceSpy,
+      }),
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
+
+    authServiceMock = injectSpy(AuthService)
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
+    component = fixture.debugElement.componentInstance
   })
 
   it('should create', () => {
+    authServiceMock.currentUser$.next(new User())
+    authServiceMock.authStatus$.next(defaultAuthStatus)
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 })

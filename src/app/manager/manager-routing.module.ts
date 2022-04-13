@@ -7,6 +7,9 @@ import { NgModule } from '@angular/core'
 import { ReceiptLookupComponent } from './receipt-lookup/receipt-lookup.component'
 import { Role } from '../auth/auth.enum'
 import { UserManagementComponent } from './user-management/user-management.component'
+import { UserResolve } from '../user/user/user.resolve'
+import { UserTableComponent } from './user-table/user-table.component'
+import { ViewUserComponent } from '../user/view-user/view-user.component'
 
 const routes: Routes = [
   {
@@ -23,7 +26,23 @@ const routes: Routes = [
       {
         path: 'users',
         component: UserManagementComponent,
+        children: [
+          {
+            path: '',
+            component: UserTableComponent,
+            outlet: 'master',
+          },
+          {
+            path: 'user',
+            component: ViewUserComponent,
+            outlet: 'detail',
+            resolve: {
+              user: UserResolve,
+            },
+          },
+        ],
         canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         data: { expectedRole: Role.Manager },
       },
       {

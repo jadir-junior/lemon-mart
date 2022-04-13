@@ -10,6 +10,7 @@ import { NgxMaskModule } from 'ngx-mask'
 import { ProfileComponent } from './profile/profile.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { UserMaterialModule } from './user-material.module'
+import { UserResolve } from './user/user.resolve'
 import { UserRoutingModule } from './user-routing.module'
 import { ViewUserComponent } from './view-user/view-user.component'
 
@@ -31,5 +32,6 @@ import { ViewUserComponent } from './view-user/view-user.component'
     NgxMaskModule.forChild(),
     LemonRaterModule,
   ],
+  providers: [UserResolve],
 })
 export class UserModule {}
